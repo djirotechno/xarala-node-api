@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 
 
-const UserSchema = new mongoose.Schema({
+const CategorySchema = new mongoose.Schema({
 
 
     name:{

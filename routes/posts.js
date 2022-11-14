@@ -8,7 +8,7 @@ const Post = require("../modeles/Posts")
 router.post("/",async(req,res)=>{
     const post = new Post(req.body);
     try{
-        const savePost = post.save();
+        const savePost = await post.save();
         res.status(200).json(savePost);
     }catch(err){
         res.status(500).json(err);
@@ -57,10 +57,10 @@ router.delete("/:id", async(req,res)=>{
 
 //GET
 router.get("/:id", async(req,res)=>{
-    if(req.body.postId === req.params.id){
+    if(req.body.postId === req.params.id){ 
         try{
         const post = await Post.findById(req.params.id);
-        const  {password,...others} = post._doc
+        const  {password, ...others} = post._doc
         res.status(200).json(others)
        
         }catch(err){
