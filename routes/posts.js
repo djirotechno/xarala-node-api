@@ -1,10 +1,8 @@
 const router = require("express").Router()
-
 const Post = require("../modeles/Posts")
 
 
-
-//CREATE
+//CREATE Article
 router.post("/",async(req,res)=>{
     const post = new Post(req.body);
     try{
@@ -15,20 +13,17 @@ router.post("/",async(req,res)=>{
     }
 })
 
-//UPDATE
+//UPDATE Article
 router.put("/:id", async(req,res)=>{
-    
         try {
-
             const postUpdate = await Post.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true})
             res.status(200).json(postUpdate)
         } catch (error) {
              res.status(500).json(error)
-    
         }
 });
 
-//DELETE
+//DELETE Article
 router.delete("/:id", async(req,res)=>{
         try{
             await Post.findByIdAndDelete(req.params.id)
@@ -38,15 +33,13 @@ router.delete("/:id", async(req,res)=>{
         }
 });
 
-
-//GET POST
+//Show Article
 router.get("/:id", async(req,res)=>{
     if(req.params.id){ 
         try{
-        const post = await Post.findById(req.params.id);
-        const  {password, ...others} = post._doc
-        res.status(200).json(others)
-       
+            const post = await Post.findById(req.params.id);
+            const  {password, ...others} = post._doc
+            res.status(200).json(others)
         }catch(err){
             res.status(500).json(err);
         }
@@ -56,23 +49,22 @@ router.get("/:id", async(req,res)=>{
  
 });
 
-//GET ALL POST
+//GET ALL Articles
 
 router.get("/",async(req,res)=>{
+    if(Post){
+        try {
+            let posts;
+            posts = await Post.find()
+            res.status(200).json(posts)
+        } catch (error) {
+            res.status(500).json(error)
+        }
 
-if(Post){
-
-
-}else{
-    res.status(404).json("Aucun Post pour le moment")
+    }else{
+        res.status(404).json("Aucun Post pour le moment")
 }
-    try {
-        let posts;
-        posts = await Post.find()
-        res.status(200).json(posts)
-    } catch (error) {
-        res.status(500).json(error)
-    }
+   
 })
 
 

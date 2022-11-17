@@ -1,13 +1,16 @@
+ 
+ //  importation des dependances
  express  = require("express");
  const app = express()
  const mongoose = require("mongoose");
  const postRoute = require("./routes/posts")
  const dotenv = require("dotenv");
- const URL = 'mongodb+srv://xarala:kvOBlkxcgeuppfw4@cluster0.8ezsbts.mongodb.net/?retryWrites=true&w=majority'
  dotenv.config()
  
 app.use(express.json());
- mongoose.connect( URL,{
+
+//connexion a la base de donnee mongoDb
+ mongoose.connect( process.env.MONGO_URL,{
     useNewUrlParser:true,
     // useUnifieldTopology:true,
  }).then(console.log("data base connected !")).catch((err)=>{
@@ -15,6 +18,8 @@ app.use(express.json());
  });
 
 
+
+//point d'entre principale de notre API - Prend comme argument les routes
  app.use("/api/posts",postRoute);
 
 
