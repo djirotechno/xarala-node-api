@@ -4,38 +4,17 @@ const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema({
 
-
     title:{
         type:String,
         unique:true,
-
     },
-
     desc:{
         type:String,
         require:true
-
-
     },
-
-    photo:{
-        type:String,
-        require:false
-
-
-    },
-
-    categories:{
-        type:Array,
-        require:false
-
-
-    },
-    
-        username:{
+    author:{
             type:String,
-            require:true
-        
+            require:true  
     },
     
 },{timestamps:true})

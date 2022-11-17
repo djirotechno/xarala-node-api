@@ -1,32 +1,27 @@
  express  = require("express");
-const app = express()
-
- const dotenv = require("dotenv");
+ const app = express()
  const mongoose = require("mongoose");
- const authRoute = require("./routes/auth")
- const userRoute = require("./routes/users")
  const postRoute = require("./routes/posts")
- const categorieRoute = require("./routes/categories")
- 
+ const dotenv = require("dotenv");
+ const URL = 'mongodb+srv://xarala:kvOBlkxcgeuppfw4@cluster0.8ezsbts.mongodb.net/?retryWrites=true&w=majority'
  dotenv.config()
+ 
 app.use(express.json());
- mongoose.connect( 'mongodb+srv://xarala:kvOBlkxcgeuppfw4@cluster0.8ezsbts.mongodb.net/?retryWrites=true&w=majority',{
+ mongoose.connect( URL,{
     useNewUrlParser:true,
     // useUnifieldTopology:true,
  }).then(console.log("data base connected !")).catch((err)=>{
     console.log(err);
  });
 
-app.use("/api/auths",authRoute);
-app.use("/api/users",userRoute);
-app.use("/api/posts",postRoute);
-app.use("/api/categorie",categorieRoute);
+
+ app.use("/api/posts",postRoute);
 
 
 
-app.listen(5000,()=>{
+ app.listen(5000,()=>{
     console.log("server Backend is runing");
-})
+ })
 
 
 
